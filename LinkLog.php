@@ -53,6 +53,7 @@ class LinkLog{
         if (function_exists($this->headerSegment, $name)) {
             $preSegment = $this->currentSegment;
             $this->currentSegment = &(new LogSegment($this->logger, $this->idCreator, $preSegment));
+            $preSegment->nextSegment = $this->currentSegment;
             return $this->currentSegment->$name($arguments);
         }
 
