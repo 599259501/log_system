@@ -30,4 +30,8 @@ class LogSegment
         $this->preSegment = $preSegment;
         $this->logTime = time();
     }
+
+    public function debug(){
+
+    }
 }
