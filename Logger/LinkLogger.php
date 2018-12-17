@@ -19,7 +19,7 @@ class LinkLogger{
     const ALERT_LEVEL = 'alert';
     const EMERGENCY_LEVEL = 'emergency';
 
-
+    public $baseDir;
     public $levelPriority = [
         self::DEBUG_LEVEL,
         self::INFO_LEVEL,
@@ -30,34 +30,48 @@ class LinkLogger{
         self::ALERT_LEVEL,
         self::EMERGENCY_LEVEL,
     ];
-    // 整个完整的链路实例
-    public $completeLogEntity;
 
-    public function __construct(LinkLog $logEntity)
-    {
-        $this->completeLogEntity = $logEntity;
+    public function debug($file, $message, $context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
     }
 
-    public function debug(){}
+    public function info($file, $message, $context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    }
 
-    public function info(){ }
+    public function notice($file, $message, $context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    }
 
-    public function notice(){}
+    public function warn($file, $message, $context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    }
 
-    public function warn(){}
+    public function error($file, $message, $context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    }
 
-    public function error(){}
+    public function critical($file, $message, $context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    }
 
-    public function critical(){}
+    public function alert($file, $message, $context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    }
 
-    public function alert(){}
+    public function emergency($file, $message, $context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    }
 
-    public function emergency(){}
-
-    public function addRecord($level,$message,$context = []){
+    public function addRecord($level,$file,$message,$context = []){
+        return $this->addRecord(__FUNCTION__, $file, $message, $context);
     }
 
     public function getPriority($level){
         return array_search($level, $this->levelPriority);
+    }
+
+    public function setBaseDir($baseDir){
+        $this->baseDir = $baseDir;
     }
 }

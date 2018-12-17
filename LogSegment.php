@@ -6,8 +6,8 @@
  * Time: 18:06
  */
 
-require 'Logger/LinkLogger.php';
-require 'IDCreator/BaseIDCreator.php';
+require_once 'Logger/LinkLogger.php';
+require_once 'IDCreator/BaseIDCreator.php';
 
 class LogSegment
 {
@@ -27,7 +27,7 @@ class LogSegment
 
     public $headerSegment;
 
-    public function __construct(LinkLogger $logger,BaseIDCreator $idCreator,LogSegment $preSegment)
+    public function __construct(LinkLogger $logger,BaseIDCreator $idCreator,$preSegment)
     {
         $this->logger = $logger;
         $this->linkIdCreator = $idCreator;
@@ -35,10 +35,11 @@ class LogSegment
         $this->logTime = time();
 
         if (is_null($preSegment)) {
-            $this->headerSegment = &$this;
+            $this->headerSegment = $this;
+            $this->tranceId = 0;
+        } else {
+            $this->tranceId = $idCreator->getLinkId();
         }
-
-        $this->tranceId = $idCreator->getLinkId();
     }
 
     public function debug($file, $message, $context = []){
@@ -74,10 +75,14 @@ class LogSegment
     }
 
     public function addRecord($level, $file, $message, $context = []){
+
         if (!is_null($this->preSegment)) {
             $context['cost_time'] = $this->logTime - $this->preSegment->logTime;
-            $context['parent_trance_id'] = $this->tranceId;
-            $context['request_trance_id'] = $this->headerSegment->tranceId;
+            $context['parent_trance_id'] = $this->preSegment->tranceId;
+            $context['request_trance_id'] = $this->tranceId;
+        } else {
+            $context['parent_trance_id'] = 0;
+            $context['request_trance_id'] = $this->tranceId;
         }
 
         return $this->logger->$level($file, $message, $context);

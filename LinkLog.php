@@ -27,7 +27,7 @@ class LinkLog{
     {
         $this->logger = $logger;
         $this->idCreator = $idCreator;
-        $this->headerSegment = $this->currentSegment = &(new LogSegment($logger, $idCreator, null));
+        $this->headerSegment = $this->currentSegment = new LogSegment($logger, $idCreator, NULL);
     }
 
     public static function getLogInstance(LinkLogger $logger,BaseIDCreator $idCreator){
@@ -46,29 +46,32 @@ class LinkLog{
     public function __call($name, $arguments)
     {
         // TODO: Implement __call() method.
-        if (function_exists($this, $name)) {
+        if (method_exists($this, $name)) {
             return $this->$name($arguments);
         }
 
-        if (function_exists($this->headerSegment, $name)) {
+        if (method_exists($this->headerSegment, $name)) {
             $preSegment = $this->currentSegment;
-            $this->currentSegment = &(new LogSegment($this->logger, $this->idCreator, $preSegment));
+            $this->currentSegment = new LogSegment($this->logger, $this->idCreator, $preSegment);
             $preSegment->nextSegment = $this->currentSegment;
-            return $this->currentSegment->$name($arguments);
+            return call_user_func_array(array($this->currentSegment, $name), $arguments);
         }
 
         throw new Exception("method not found!");
     }
 
-    public function __callStatic($name, $arguments){
-        if (function_exists($this, $name)) {
-            return $this->$name($arguments);
+    public static function __callStatic($name, $arguments){
+
+        $instance = self::$LinkLog;
+
+        if (method_exists($instance, $name)) {
+            return call_user_func_array(array($instance, $name), $arguments);
         }
 
-        if (function_exists($this->headerSegment, $name)) {
-            $preSegment = $this->currentSegment;
-            $this->currentSegment = &(new LogSegment($this->logger, $this->idCreator, $preSegment));
-            return $this->currentSegment->$name($arguments);
+        if (method_exists($instance->headerSegment, $name)) {
+            $preSegment = $instance->currentSegment;
+            $instance->currentSegment = new LogSegment($instance->logger, $instance->idCreator, $preSegment);
+            return call_user_func_array(array($instance->currentSegment, $name), $arguments);
         }
 
         throw new Exception("method not found!");
