@@ -10,15 +10,15 @@ require_once '../LogSegment.php';
 require_once '../Logger/FileLogger.php';
 require_once '../IDCreator/BaseIDCreator.php';
 require_once '../LogSegment.php';
-require_once '../Logger/KafkaLogger';
+require_once '../Logger/KafkaLogger.php';
 
 $producer = new RdKafka\Producer();
-$rk->setLogLevel(LOG_DEBUG);
-$rk->addBrokers("127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:904");
+$producer->setLogLevel(LOG_DEBUG);
+$producer->addBrokers("127.0.0.1:9092,127.0.0.1:9093,127.0.0.1:9094");
 
-$logger = KafkaLogger();
+$logger = new KafkaLogger();
 $logger->setLogTopic('log_system');
-$logger->setProducer($rk);
+$logger->setProducer($producer);
 
 $creator = new BaseIDCreator();
 LinkLog::initLogInstance($logger,$creator);

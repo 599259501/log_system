@@ -6,7 +6,7 @@
  * Time: 20:17
  */
 
-require_once '../LinkLogger.php';
+require_once '../Logger/LinkLogger.php';
 use RdKafka\Producer;
 
 class KafkaLogger extends LinkLogger
