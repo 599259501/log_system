@@ -15,14 +15,14 @@ class FileLogger extends LinkLogger{
         $this->setBaseDir(dirname(__FILE__));
     }
 
-    public function addRecord($level, $file, $message, $context = [])
+    public function addRecord($level, $message, $context = [])
     {
         $dirs = $this->baseDir.DIRECTORY_SEPARATOR.self::$date;
 
         if (!is_dir($dirs)) {
             mkdir($dirs, 0777, true);
         }
-        $logName = $dirs.DIRECTORY_SEPARATOR.$file.'.log';
+        $logName = $dirs.DIRECTORY_SEPARATOR.$this->logSource.'.log';
 
         file_put_contents($logName, sprintf("%s|%s|||%s\r\n", $level, $message, json_encode($context)), FILE_APPEND);
 

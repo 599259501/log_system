@@ -33,49 +33,48 @@ class LogSegment
         $this->linkIdCreator = $idCreator;
         $this->preSegment = $preSegment;
         $this->logTime = time();
+        $this->tranceId = $idCreator->getLinkId();
 
         if (is_null($preSegment)) {
             $this->headerSegment = $this;
-            $this->tranceId = 0;
         } else {
-            $this->tranceId = $idCreator->getLinkId();
+            $this->headerSegment = $this->preSegment->headerSegment;
         }
     }
 
-    public function debug($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function debug($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function info($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function info($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function notice($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function notice($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function warn($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function warn($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function error($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function error($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function critical($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function critical($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function alert($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function alert($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function emergency($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function emergency($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function addRecord($level, $file, $message, $context = []){
-
+    public function addRecord($level, $message, $context = []){
         if (!is_null($this->preSegment)) {
             $context['cost_time'] = $this->logTime - $this->preSegment->logTime;
             $context['parent_trance_id'] = $this->preSegment->tranceId;
@@ -84,7 +83,8 @@ class LogSegment
             $context['parent_trance_id'] = 0;
             $context['request_trance_id'] = $this->tranceId;
         }
+        $context['first_trance_id'] = $this->headerSegment->tranceId;
 
-        return $this->logger->$level($file, $message, $context);
+        return $this->logger->$level($message, $context);
     }
 }

@@ -31,40 +31,42 @@ class LinkLogger{
         self::EMERGENCY_LEVEL,
     ];
 
-    public function debug($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    protected $logSource;
+
+    public function debug($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function info($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function info($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function notice($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function notice($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function warn($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function warn($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function error($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function error($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function critical($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function critical($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function alert($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function alert($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function emergency($file, $message, $context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function emergency($message, $context = []){
+        return $this->addRecord(__FUNCTION__, $message, $context);
     }
 
-    public function addRecord($level,$file,$message,$context = []){
-        return $this->addRecord(__FUNCTION__, $file, $message, $context);
+    public function addRecord($level,$message,$context = []){
+        return $this->addRecord($level,  $message, $context);
     }
 
     public function getPriority($level){
@@ -73,5 +75,9 @@ class LinkLogger{
 
     public function setBaseDir($baseDir){
         $this->baseDir = $baseDir;
+    }
+
+    public function setLogSource($source){
+        $this->logSource = $source;
     }
 }

@@ -38,6 +38,12 @@ class LinkLog{
         return self::$LinkLog;
     }
 
+    public static function initLogInstance(LinkLogger $logger,BaseIDCreator $idCreator){
+        if (is_null(self::$LinkLog)) {
+            self::$LinkLog = new self($logger,$idCreator);
+        }
+    }
+
     public function setMiniLevel($level){
         // todo 这里要对level做判断
         $this->minLevel = $level;

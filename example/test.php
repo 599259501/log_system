@@ -13,9 +13,12 @@ require_once '../IDCreator/BaseIDCreator.php';
 require_once '../LogSegment.php';
 
 $logger = new FileLogger();
+$logger->setLogSource('zhf_test');
 $creator = new BaseIDCreator();
 
-$instance = LinkLog::getLogInstance($logger,$creator);
-$instance->debug("test", "第一次测试", []);
-sleep(10);
-$instance->info("test", "第2次测试", []);
+LinkLog::initLogInstance($logger,$creator);
+
+for ($i=1;$i<=10;$i++){
+    LinkLog::debug("第${i}次测试", []);
+    sleep($i*$i);
+}
