@@ -7,16 +7,21 @@
  */
 
 require_once '../LinkLogger.php';
-use \RdKafka\Producer;
+use RdKafka\Producer;
 
 class KafkaLogger extends LinkLogger
 {
     protected $producer;
     protected $partitionList = [0];
     protected $partitionCal = 1; // 计数器
+    protected $partition = 0;
 
     public function setProducer(Producer $producer){
         $this->producer = $producer;
+    }
+
+    public function setPartition($partition){
+        $this->partition = $partition;
     }
 
     public function setLogTopic($topic){
@@ -25,7 +30,7 @@ class KafkaLogger extends LinkLogger
 
     public function addRecord($level, $message, $context = []){
         $topic = $this->producer->newTopic($this->logSource);
-        $partition = $this->getPartitionAndReset();
+        $partition = $this->partition;
         $topic->produce(RD_KAFKA_PARTITION_UA, $partition, json_encode(['message'=> $message, 'context'=> $context]));
     }
 
