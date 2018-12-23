@@ -31,7 +31,8 @@ class KafkaLogger extends LinkLogger
     public function addRecord($level, $message, $context = []){
         $topic = $this->producer->newTopic($this->logSource);
         $partition = $this->partition;
-        $topic->produce(RD_KAFKA_PARTITION_UA, $partition, json_encode(['message'=> $message, 'context'=> $context]));
+        $context['message'] = $message;
+        $topic->produce(RD_KAFKA_PARTITION_UA, $partition, json_encode($context));
     }
 
     public function getPartitionAndReset(){
