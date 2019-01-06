@@ -5,12 +5,18 @@
  * Date: 2018/12/22
  * Time: 23:12
  */
-require_once '../LinkLog.php';
-require_once '../LogSegment.php';
-require_once '../Logger/FileLogger.php';
-require_once '../IDCreator/BaseIDCreator.php';
-require_once '../LogSegment.php';
-require_once '../Logger/KafkaLogger.php';
+//require_once '../LinkLog.php';
+use TRACE_LOG\LinkLog;
+//require_once '../LogSegment.php';
+use TRACE_LOG\LogSegment;
+//require_once '../Logger/FileLogger.php';
+use TRACE_LOG\Logger\FileLogger;
+//require_once '../IDCreator/BaseIDCreator.php';
+use TRACE_LOG\IDCreator\BaseIDCreator;
+//require_once '../LogSegment.php';
+use TRACE_LOG\LogSegment;
+//require_once '../Logger/KafkaLogger.php';
+use TRACE_LOG\Logger\KafkaLogger;
 
 $producer = new RdKafka\Producer();
 $producer->setLogLevel(LOG_DEBUG);

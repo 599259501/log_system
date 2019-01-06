@@ -5,9 +5,12 @@
  * Date: 2018/12/15
  * Time: 22:40
  */
+namespace TRACE_LOG;
 
-require 'Logger/LinkLogger.php';
-require 'IDCreator/BaseIDCreator.php';
+use TRACE_LOG\Logger\LinkLogger;
+use TRACE_LOG\IDCreator\BaseIDCreator;
+//require 'Logger/LinkLogger.php';
+//require 'IDCreator/BaseIDCreator.php';
 class LinkLog{
     protected $logger;
 

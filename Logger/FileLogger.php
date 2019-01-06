@@ -6,7 +6,9 @@
  * Time: 22:00
  */
 
-require_once 'LinkLogger.php';
+namespace TRACE_LOG\Logger;
+
+//require_once 'LinkLogger.php';
 class FileLogger extends LinkLogger{
     static $date;
     public function __construct()

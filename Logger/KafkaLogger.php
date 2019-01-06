@@ -5,8 +5,9 @@
  * Date: 2018/12/22
  * Time: 20:17
  */
+namespace TRACE_LOG\Logger;
 
-require_once '../Logger/LinkLogger.php';
+//require_once '../Logger/LinkLogger.php';
 use RdKafka\Producer;
 
 class KafkaLogger extends LinkLogger
