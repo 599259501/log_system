@@ -5,8 +5,10 @@
  * Date: 2018/12/15
  * Time: 22:44
  */
+namespace TRACE_LOG\Logger;
 
-require_once '../LinkLog.php';
+use TRACE_LOG\LinkLog;
+//require_once '../LinkLog.php';
 
 class LinkLogger{
 

@@ -6,11 +6,15 @@
  * Time: 22:17
  */
 
-require_once '../LinkLog.php';
-require_once '../LogSegment.php';
-require_once '../Logger/FileLogger.php';
-require_once '../IDCreator/BaseIDCreator.php';
-require_once '../LogSegment.php';
+//require_once '../LinkLog.php';
+use TRACE_LOG\LinkLog;
+//require_once '../LogSegment.php';
+use TRACE_LOG\LogSegment;
+//require_once '../Logger/FileLogger.php';
+use TRACE_LOG\Logger\FileLogger;
+//require_once '../IDCreator/BaseIDCreator.php';
+use TRACE_LOG\IDCreator\BaseIDCreator;
+//require_once '../LogSegment.php';
 
 $logger = new FileLogger();
 $logger->setLogSource('zhf_test');
